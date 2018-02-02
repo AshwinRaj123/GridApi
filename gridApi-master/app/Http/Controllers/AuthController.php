@@ -24,14 +24,14 @@ class AuthController extends Controller
     
 		
 		$user =  $request->input('first_name');
-		$password =  bcrypt($request->input('password'));
+		$password =  $request->input('password');
 
-		dd($password);
+		//dd($password);
 
  		$authUser = Profile::where('first_name', $user)->first();
  		$authPass = Profile::where('password', $password)->first();
- 		
-	     if($authPass && $authUser ==  true ){
+ 		//dd($authPass);
+	     if($authUser && $authPass ==  true ){
 	 
 	          $apikey = base64_encode(str_random(40));
 	 

@@ -23,3 +23,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('/profile', 'ProfileController');
 
 Route::post('/loginUser', 'AuthController@loginuser');
+
+Route::resource('/interest', 'InterestController');
+
+Route::resource('/languages', 'LanguagesController');

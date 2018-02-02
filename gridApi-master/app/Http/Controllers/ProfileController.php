@@ -50,7 +50,7 @@ class ProfileController extends Controller
         $profile->mobile = $request->mobile;
         $profile->first_name = $request->first_name;
         $profile->last_name = $request->last_name;
-        $profile->password = bcrypt($request->password);
+        $profile->password = $request->password;
         /*$profile->gender = $request->gender;
         $profile->pro_tag_line = $request->pro_tag_line;
         $profile->location = $request->location;
