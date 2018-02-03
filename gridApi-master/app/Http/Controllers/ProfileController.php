@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Storage;
 use Config;
 use App\Profile;
+use Jenssegers\Mongodb\Validation;
 
 
 class ProfileController extends Controller
@@ -50,7 +51,8 @@ class ProfileController extends Controller
         $profile->mobile = $request->mobile;
         $profile->first_name = $request->first_name;
         $profile->last_name = $request->last_name;
-        $profile->password = $request->password;
+        $profile->password = Hash::make($request->password);
+        $profile->email = $request->email;
         /*$profile->gender = $request->gender;
         $profile->pro_tag_line = $request->pro_tag_line;
         $profile->location = $request->location;

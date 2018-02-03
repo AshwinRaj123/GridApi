@@ -4,11 +4,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Jenssegers\Mongodb\Connection;
 
-
+use Jenssegers\Mongodb\Validation;
 use Illuminate\Support\Facades\Hash;
 use App\Profile;
 use App\User;
 use MongoDB;
+use DB;
 
 class AuthController extends Controller
 {
@@ -22,16 +23,12 @@ class AuthController extends Controller
     	]);
 
     
-		
-		$user =  $request->input('first_name');
-		$password =  $request->input('password');
+		$name= $request->first_name;
+    	$password = $request->password;
 
-		//dd($password);
+    	$user = Profile::find(['first_name' => $name, 'password' => $password]);
 
- 		$authUser = Profile::where('first_name', $user)->first();
- 		$authPass = Profile::where('password', $password)->first();
- 		//dd($authPass);
-	     if($authUser && $authPass ==  true ){
+    	 if($name && $password ==  true ){
 	 
 	          $apikey = base64_encode(str_random(40));
 	 
@@ -41,11 +38,33 @@ class AuthController extends Controller
 	 
 	      }else{
 	 
-	          return response()->json(['status' => 'fail', 'auth'=>$authUser],401);
-	 
-	      }
+	          return response()->json(['status' => 'fail', 'auth'=>$password],401);
+    }
+}
+
 
 
     }
-}
+
+//     public function test(Request $request) {
+
+//     	$name= $request->first_name;
+//     	$password = $request->password;
+
+//     	$user = Profile::find(['first_name' => $name, 'password' => $password]);
+
+//     	 if($name && $password ==  true ){
+	 
+// 	          $apikey = base64_encode(str_random(40));
+	 
+// 	         Profile::where('first_name', $request->input('first_name'))->update(['api_key' => "$apikey"]);;
+	 
+// 	          return response()->json(['status' => 'success','api_key' => $apikey]);
+	 
+// 	      }else{
+	 
+// 	          return response()->json(['status' => 'fail', 'auth'=>$password],401);
+//     }
+// }
+// }
 
