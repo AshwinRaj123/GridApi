@@ -29,3 +29,7 @@ Route::post('/loginUser', 'AuthController@loginuser');
 Route::resource('/interest', 'InterestController');
 
 Route::resource('/languages', 'LanguagesController');
+
+Route::resource('/location', 'LocationController');
+
+Route::resource('/event', 'EventController');
