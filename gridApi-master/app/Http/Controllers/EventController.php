@@ -77,9 +77,19 @@ class EventController extends Controller
      * @param  \App\event  $event
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, event $event)
+    public function update(Request $request, $id)
     {
-        //
+        $event = Event::where('_id',$id)->first();
+
+        $event->title = $request->title;
+        $event->description = $request->description;
+        $event->profile_id = $request->profile_id;
+        $event->interest_id = $request->interest_id;
+        $event->location_id = $request->location_id;
+
+        $event->save();
+        return $event;
+
     }
 
     /**
@@ -88,8 +98,10 @@ class EventController extends Controller
      * @param  \App\event  $event
      * @return \Illuminate\Http\Response
      */
-    public function destroy(event $event)
+    public function destroy($id)
     {
-        //
+        $event = Event::where('_id',$id)->first();
+        $event->delete();
+        return response()->json("Data Deleted");
     }
 }

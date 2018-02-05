@@ -14,7 +14,7 @@ class LocationController extends Controller
      */
     public function index()
     {
-        $c = Interest::all();
+        $c = Location::all();
         return $c;
     }
 
@@ -84,9 +84,19 @@ class LocationController extends Controller
      * @param  \App\location  $location
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, location $location)
+    public function update(Request $request, $id)
     {
-        //
+        $location = Location::where('_id',$id)->first();
+        
+        $location->name = $request->name;
+        $location->address1 = $request->address1;
+        $location->address2 = $request->address2;
+        $location->geotag = $request->geotag;
+        $location->total_people = $location->total_people;
+
+        $location->save();
+
+        return $location;
     }
 
     /**
@@ -95,8 +105,12 @@ class LocationController extends Controller
      * @param  \App\location  $location
      * @return \Illuminate\Http\Response
      */
-    public function destroy(location $location)
+    public function destroy($id)
     {
-        //
+        $location = Location::where('_id',$id)->first();
+
+        $location->delete();
+
+        return response()->json("Data Deleted");
     }
 }

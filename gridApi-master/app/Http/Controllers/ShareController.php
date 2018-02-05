@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\languages;
+use App\share;
 use Illuminate\Http\Request;
 
-class LanguagesController extends Controller
+class ShareController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class LanguagesController extends Controller
      */
     public function index()
     {
-        $c = Languages::all();
+        $c = Share::all();
         return $c;
     }
 
@@ -25,7 +25,7 @@ class LanguagesController extends Controller
      */
     public function create()
     {
-        return view('languages.create');
+        return view('share.create');
     }
 
     /**
@@ -36,38 +36,33 @@ class LanguagesController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, array(
-            'name'=>'required'
-        ));
+        $share = new Share();
 
-        $languages = new Languages();
+        $share->profile_id = $request->profile_id;
 
-        $languages->name = $request->name;
-        $languages->total_people = $request->total_people;
+        $share->save();
 
-        $languages->save();
-        return $languages;
+        return $share;
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\languages  $languages
+     * @param  \App\c  $c
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(c $c)
     {
-        $languages = Languages::where('_id',$id)->first();
-        return $languages;
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\languages  $languages
+     * @param  \App\c  $c
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(c $c)
     {
         //
     }
@@ -76,32 +71,32 @@ class LanguagesController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\languages  $languages
+     * @param  \App\c  $c
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        $languages = Languages::where('_id',$id)->first();
+        $share = Share::where('_id',$id)->first();
 
-        $languages->name = $request->name;
-        $languages->total_people = $request->total_people;
+        $share->profile_id = $request->profile_id;
 
-        $languages->save();
-        return $languages;
+        $share->save();
+
+        return $share;
+
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\languages  $languages
+     * @param  \App\c  $c
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        $languages = Languages::find($id);
+        $share = Share::where('_id',$id)->first();
+        $share->delete();
 
-        $languages->delete();
-
-        return response()->json("Data Deleted");
+        return response()->json("Data deleted");
     }
 }

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\languages;
+use App\message;
 use Illuminate\Http\Request;
 
-class LanguagesController extends Controller
+class MessageController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class LanguagesController extends Controller
      */
     public function index()
     {
-        $c = Languages::all();
+        $c = Message::all();
         return $c;
     }
 
@@ -25,7 +25,7 @@ class LanguagesController extends Controller
      */
     public function create()
     {
-        return view('languages.create');
+        return view('message.create');
     }
 
     /**
@@ -36,38 +36,37 @@ class LanguagesController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, array(
-            'name'=>'required'
-        ));
+        $message = new Message();
 
-        $languages = new Languages();
+        $message->from_id = $request->from_id;
+        $message->to_id = $request->to_id;
+        $message->seen = $request->seen;
+        $message->mediaObject = $request->mediaObject;
+        $message->received = $request->received;
 
-        $languages->name = $request->name;
-        $languages->total_people = $request->total_people;
+        $message->save();
+        return $message;
 
-        $languages->save();
-        return $languages;
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\languages  $languages
+     * @param  \App\message  $message
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(message $message)
     {
-        $languages = Languages::where('_id',$id)->first();
-        return $languages;
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\languages  $languages
+     * @param  \App\message  $message
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(message $message)
     {
         //
     }
@@ -76,31 +75,34 @@ class LanguagesController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\languages  $languages
+     * @param  \App\message  $message
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        $languages = Languages::where('_id',$id)->first();
+        $message = Message::where('_id',$id)->first();
 
-        $languages->name = $request->name;
-        $languages->total_people = $request->total_people;
+        $message->from_id = $request->from_id;
+        $message->to_id = $request->to_id;
+        $message->seen = $request->seen;
+        $message->mediaObject = $request->mediaObject;
+        $message->received = $request->received;
 
-        $languages->save();
-        return $languages;
+        $message->save();
+        return $message;
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\languages  $languages
+     * @param  \App\message  $message
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        $languages = Languages::find($id);
+        $message = Message::where('_id',$id)->first();
 
-        $languages->delete();
+        $message->delete();
 
         return response()->json("Data Deleted");
     }

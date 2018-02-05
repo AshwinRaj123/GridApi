@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\languages;
+use App\like;
 use Illuminate\Http\Request;
 
-class LanguagesController extends Controller
+class LikeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class LanguagesController extends Controller
      */
     public function index()
     {
-        $c = Languages::all();
+        $c = Like::all();
         return $c;
     }
 
@@ -25,7 +25,7 @@ class LanguagesController extends Controller
      */
     public function create()
     {
-        return view('languages.create');
+        return view('like.create');
     }
 
     /**
@@ -36,38 +36,34 @@ class LanguagesController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, array(
-            'name'=>'required'
-        ));
+        $like = new Like();
 
-        $languages = new Languages();
+        $like->profile_id = $request->profile_id;
+        $like->post_id = $request->post_id;
 
-        $languages->name = $request->name;
-        $languages->total_people = $request->total_people;
+        $like->save();
 
-        $languages->save();
-        return $languages;
+        return $like;
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\languages  $languages
+     * @param  \App\like  $like
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(like $like)
     {
-        $languages = Languages::where('_id',$id)->first();
-        return $languages;
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\languages  $languages
+     * @param  \App\like  $like
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(like $like)
     {
         //
     }
@@ -76,32 +72,32 @@ class LanguagesController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\languages  $languages
+     * @param  \App\like  $like
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        $languages = Languages::where('_id',$id)->first();
+        $like = Like::where('_id',$id)->first();
 
-        $languages->name = $request->name;
-        $languages->total_people = $request->total_people;
+        $like->profile_id = $request->profile_id;
+        $like->post_id = $request->post_id;
 
-        $languages->save();
-        return $languages;
+        $like->save();
+
+        return $like;
+
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\languages  $languages
+     * @param  \App\like  $like
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        $languages = Languages::find($id);
-
-        $languages->delete();
-
-        return response()->json("Data Deleted");
+         $like = Like::where('_id',$id)->first();
+         $like->delete();
+         return response()->json("Data Deleted");
     }
 }

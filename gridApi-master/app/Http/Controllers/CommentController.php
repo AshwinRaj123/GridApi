@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\languages;
+use App\comment;
 use Illuminate\Http\Request;
 
-class LanguagesController extends Controller
+class CommentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class LanguagesController extends Controller
      */
     public function index()
     {
-        $c = Languages::all();
+        $c = Comment::all();
         return $c;
     }
 
@@ -25,7 +25,7 @@ class LanguagesController extends Controller
      */
     public function create()
     {
-        return view('languages.create');
+        return view('comment.create');
     }
 
     /**
@@ -36,38 +36,33 @@ class LanguagesController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, array(
-            'name'=>'required'
-        ));
+        $comment = new Comment();
 
-        $languages = new Languages();
+        $comment->profile_id = $request->profile_id;
+        $comment->comment = $request->comment;
 
-        $languages->name = $request->name;
-        $languages->total_people = $request->total_people;
-
-        $languages->save();
-        return $languages;
+        $comment->save();
+        return $comment;
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\languages  $languages
+     * @param  \App\comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(comment $comment)
     {
-        $languages = Languages::where('_id',$id)->first();
-        return $languages;
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\languages  $languages
+     * @param  \App\comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(comment $comment)
     {
         //
     }
@@ -76,31 +71,32 @@ class LanguagesController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\languages  $languages
+     * @param  \App\comment  $comment
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        $languages = Languages::where('_id',$id)->first();
+        $comment = Comment::where('_id',$id)->first();
 
-        $languages->name = $request->name;
-        $languages->total_people = $request->total_people;
+        $comment->profile_id = $request->profile_id;
+        $comment->comment = $request->comment;
 
-        $languages->save();
-        return $languages;
+        $comment->save();
+        return $comment;
+
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\languages  $languages
+     * @param  \App\comment  $comment
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        $languages = Languages::find($id);
+        $comment = Comment::where('_id',$id)->first();
 
-        $languages->delete();
+        $comment->delete();
 
         return response()->json("Data Deleted");
     }

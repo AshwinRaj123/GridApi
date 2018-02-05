@@ -58,9 +58,10 @@ class InterestController extends Controller
      * @param  \App\c  $c
      * @return \Illuminate\Http\Response
      */
-    public function show(c $c)
+    public function show($id)
     {
-        //
+        $interest = Interest::where('_id',$id)->first();
+        return $interest;
     }
 
     /**
@@ -69,9 +70,10 @@ class InterestController extends Controller
      * @param  \App\c  $c
      * @return \Illuminate\Http\Response
      */
-    public function edit(c $c)
+    public function edit($id)
     {
-        //
+         $interest = Interest::where('_id',$id)->first();
+         return view('interest.edit')->withProfile($interest);
     }
 
     /**
@@ -81,9 +83,17 @@ class InterestController extends Controller
      * @param  \App\c  $c
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, c $c)
+    public function update(Request $request, $id)
     {
-        //
+        $interest = Interest::where('_id',$id)->first();
+
+        $interest->title = $request->title;
+        $interest->decription = $request->description;
+        $interest->followersCount = $request->followersCount;
+
+        $interest->save();
+
+        return $interest;   
     }
 
     /**
@@ -92,8 +102,13 @@ class InterestController extends Controller
      * @param  \App\c  $c
      * @return \Illuminate\Http\Response
      */
-    public function destroy(c $c)
+    public function destroy( $id)
     {
-        //
+        
+        $profile = Interest::find($id);
+        $profile->delete();
+
+        return response()->json('Deleted Successfully');
+    
     }
 }

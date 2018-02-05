@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\languages;
+use App\post;
 use Illuminate\Http\Request;
 
-class LanguagesController extends Controller
+class PostController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class LanguagesController extends Controller
      */
     public function index()
     {
-        $c = Languages::all();
+        $c = Post::all();
         return $c;
     }
 
@@ -25,7 +25,7 @@ class LanguagesController extends Controller
      */
     public function create()
     {
-        return view('languages.create');
+        return view('post.create');
     }
 
     /**
@@ -36,38 +36,36 @@ class LanguagesController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, array(
-            'name'=>'required'
-        ));
+        $post = new Post();
 
-        $languages = new Languages();
+        $post->title = $request->title;
+        $post->profile_id = $request->profile_id;
+        $post->description = $request->description;
+        $post->reachObject = $request->reachObject;
+        $post->having_access = $request->having_access;
 
-        $languages->name = $request->name;
-        $languages->total_people = $request->total_people;
-
-        $languages->save();
-        return $languages;
+        $post->save();
+        return $post;
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\languages  $languages
+     * @param  \App\post  $post
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(post $post)
     {
-        $languages = Languages::where('_id',$id)->first();
-        return $languages;
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\languages  $languages
+     * @param  \App\post  $post
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(post $post)
     {
         //
     }
@@ -76,31 +74,34 @@ class LanguagesController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\languages  $languages
+     * @param  \App\post  $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request,$id)
     {
-        $languages = Languages::where('_id',$id)->first();
+        $post = Post::where('_id',$id)->first();
 
-        $languages->name = $request->name;
-        $languages->total_people = $request->total_people;
+        $post->title = $request->title;
+        $post->profile_id = $request->profile_id;
+        $post->description = $request->description;
+        $post->reachObject = $request->reachObject;
+        $post->having_access = $request->having_access;
 
-        $languages->save();
-        return $languages;
+        $post->save();
+        return $post;
+
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\languages  $languages
+     * @param  \App\post  $post
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        $languages = Languages::find($id);
-
-        $languages->delete();
+        $post = Post::where('_id',$id)->first();
+        $post->delete();
 
         return response()->json("Data Deleted");
     }

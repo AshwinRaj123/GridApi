@@ -119,14 +119,15 @@ class ProfileController extends Controller
         //     'name' =>'required'
         //     ));
 
-        $profile = Profile::where('_id' , $id)->first();
+        $profile = Profile::where('_id',$id)->first();
 
 
         $profile->mobile = $request->mobile;
         $profile->first_name = $request->first_name;
         $profile->last_name = $request->last_name;
-        $profile->dob = $request->dob;
-        $profile->gender = $request->gender;
+        $profile->password = Hash::make($request->password);
+        $profile->email = $request->email;
+        /*$profile->gender = $request->gender;
         $profile->pro_tag_line = $request->pro_tag_line;
         $profile->location = $request->location;
         $profile->languages = $request->languages;
@@ -144,7 +145,7 @@ class ProfileController extends Controller
          $filePath = '/data/' . $imageFileName;
          $va = $s3->put($filePath, file_get_contents($image), 'public');
          $profile ->pro_pic = $upload_url1.config('filesystems.disks.s3.bucket').$upload_folder.$imageFileName;
-
+*/
         $profile->save();
 
         return $profile;
@@ -160,8 +161,8 @@ class ProfileController extends Controller
      */
     public function destroy($id)
     {
-        $profile = Profile::where('_id' ,$id)->first();
-        $profile->destroy();
+        $profile = Profile::find($id);
+        $profile->delete();
 
         return response()->json('Deleted Successfully');
     }
