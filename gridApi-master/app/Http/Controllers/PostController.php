@@ -43,7 +43,8 @@ class PostController extends Controller
         $post->description = $request->description;
         $post->reachObject = $request->reachObject;
         $post->having_access = $request->having_access;
-
+        $post->media_object = $request->media_object;
+        $post->privacy = $post->privacy;
         $post->save();
         return $post;
     }
@@ -86,7 +87,8 @@ class PostController extends Controller
         $post->description = $request->description;
         $post->reachObject = $request->reachObject;
         $post->having_access = $request->having_access;
-
+        $post->media_object = $request->media_object;
+        $post->privacy = $post->privacy;
         $post->save();
         return $post;
 
