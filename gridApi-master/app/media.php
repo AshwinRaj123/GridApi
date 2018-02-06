@@ -8,4 +8,8 @@ class Media extends Eloquent {
 	 use HybridRelations;
     protected $connection = 'mongodb';
     protected $collection = 'media';
+
+    public function post(){
+    	return $this->belongsTo(Profile::class);
+    }
 }

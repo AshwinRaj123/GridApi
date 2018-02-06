@@ -57,7 +57,7 @@ class LanguagesController extends Controller
      */
     public function show($id)
     {
-        $languages = Languages::where('_id',$id)->first();
+        $languages = Languages::with('profile')->get();
         return $languages;
     }
 

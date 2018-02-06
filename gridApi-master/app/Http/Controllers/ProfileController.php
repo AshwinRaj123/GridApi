@@ -57,6 +57,7 @@ class ProfileController extends Controller
         //$profile->pro_tag_line = $request->pro_tag_line;
         $profile->location = $request->location;
         $profile->languages = $request->languages;
+        $profile->post_id = $request->post_id;
         $profile->fb_page = $request->fb_page;
         $profile->twitter_page = $request->twitter_page;
         $profile->insta_page = $request->insta_page;
@@ -91,7 +92,9 @@ class ProfileController extends Controller
     public function show($id)
     {
         $profile = Profile::where('_id' , $id)->first();
-        return $profile;
+        $loc = Profile::with('location')->get();
+
+        return $loc;
     }
 
     /* *

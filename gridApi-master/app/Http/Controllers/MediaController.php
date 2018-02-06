@@ -102,7 +102,7 @@ class MediaController extends Controller
         
         $upload_url1 = 'http://s3.amazonaws.com/';
         $upload_folder = '/data/media/';
-         ini_set('memory_limit','256M');
+        
          $image = $request->file('file');
          $imageFileName = time() . '.' . $image->getClientOriginalExtension();
          $s3 = \Storage::disk('s3');
