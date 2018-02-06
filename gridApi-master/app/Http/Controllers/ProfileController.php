@@ -53,27 +53,27 @@ class ProfileController extends Controller
         $profile->last_name = $request->last_name;
         $profile->password = Hash::make($request->password);
         $profile->email = $request->email;
-        /*$profile->gender = $request->gender;
-        $profile->pro_tag_line = $request->pro_tag_line;
+        $profile->gender = $request->gender;
+        //$profile->pro_tag_line = $request->pro_tag_line;
         $profile->location = $request->location;
         $profile->languages = $request->languages;
         $profile->fb_page = $request->fb_page;
         $profile->twitter_page = $request->twitter_page;
         $profile->insta_page = $request->insta_page;
-        $profile->youtube_page = $request->youtube_page;*/
+        $profile->youtube_page = $request->youtube_page;
 
         //upload profile_pics to s3 servers
         
-       /* $upload_url1 = 'http://s3.amazonaws.com/';
-        $upload_folder = '/data/';
+        $upload_url1 = 'http://s3.amazonaws.com/';
+        $upload_folder = '/data/profile/';
 
-         $image = $request->file('image');
+         $image = $request->file('file');
          $imageFileName = time() . '.' . $image->getClientOriginalExtension();
          $s3 = \Storage::disk('s3');
-         $filePath = '/data/' . $imageFileName;
+         $filePath = '/data/profile/' . $imageFileName;
          $va = $s3->put($filePath, file_get_contents($image), 'public');
          $profile ->pro_pic = $upload_url1.config('filesystems.disks.s3.bucket').$upload_folder.$imageFileName;
-*/
+
         $profile->save();
 
         return $profile;

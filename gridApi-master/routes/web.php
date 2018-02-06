@@ -90,3 +90,11 @@ Route::post('/message', 'MessageController@store');
 Route::post('/message/{id}', 'MessageController@update');
 Route::delete('/message/{id}', 'MessageController@destroy');
 /*end of message*/
+
+
+/*media Object*/
+Route::post('/media', 'MediaController@store');
+Route::get('/media', 'MediaController@index');
+Route::post('/media/{id}', 'MediaController@update');
+Route::delete('/media/{id}', 'MediaController@destroy');
+/*end of media object*/
